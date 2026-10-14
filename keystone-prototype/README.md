@@ -14,6 +14,7 @@ Open the URL Vite prints (usually `http://localhost:5173`).
 
 ## What’s inside
 
+- **Docs** — full design pack (vision, journey, architecture, rules, scoring, configs, regulation). Open from the left nav or Home.
 - **Queue / Case** — valuation route recommendation, override, instruct
 - **HCR** — condition summary, defects, photos, surveyor notes
 - **Rules workbench** — sample rules shaped like a VRM Phase 8 draft (A→B→C→D)

@@ -2,6 +2,12 @@ import { Link } from "react-router-dom";
 
 const cards = [
   {
+    to: "/docs",
+    title: "Read the design docs",
+    blurb:
+      "Vision, journey, architecture, rules, scoring, lender configs and regulation — the full thinking pack.",
+  },
+  {
     to: "/queue",
     title: "Work a case",
     blurb:

@@ -427,6 +427,62 @@ a {
   background: var(--paper);
 }
 
+.doc-h2 {
+  margin: 0;
+  font-family: var(--display);
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.doc-p {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+}
+
+.doc-list {
+  margin: 0;
+  padding-left: 1.15rem;
+  color: var(--ink-soft);
+  font-size: 0.92rem;
+}
+
+.doc-list li + li {
+  margin-top: 6px;
+}
+
+.doc-table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+}
+
+.doc-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.86rem;
+}
+
+.doc-table th,
+.doc-table td {
+  text-align: left;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+}
+
+.doc-table th {
+  background: var(--paper);
+  color: var(--ink-soft);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.doc-table tr:last-child td {
+  border-bottom: 0;
+}
+
 @media (max-width: 960px) {
   .app-shell {
     grid-template-columns: 1fr;

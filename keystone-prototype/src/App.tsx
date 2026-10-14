@@ -1,6 +1,8 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { Shell } from "./components/Shell";
 import { CasePage } from "./pages/Case";
+import { DocPage } from "./pages/DocPage";
+import { DocsIndex } from "./pages/DocsIndex";
 import { HcrPage } from "./pages/Hcr";
 import { Home } from "./pages/Home";
 import { InstructPage } from "./pages/Instruct";
@@ -20,6 +22,8 @@ export default function App() {
             <Route path="queue" element={<Queue />} />
             <Route path="rules" element={<RulesPage />} />
             <Route path="mi" element={<MiPage />} />
+            <Route path="docs" element={<DocsIndex />} />
+            <Route path="docs/:slug" element={<DocPage />} />
             <Route path="case/:caseId" element={<CasePage />} />
             <Route path="case/:caseId/hcr" element={<HcrPage />} />
             <Route path="case/:caseId/override" element={<OverridePage />} />

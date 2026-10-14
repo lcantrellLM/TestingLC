@@ -5,6 +5,7 @@ const links = [
   { to: "/queue", label: "Queue" },
   { to: "/rules", label: "Rules" },
   { to: "/mi", label: "MI" },
+  { to: "/docs", label: "Docs" },
 ];
 
 export function Shell() {
