@@ -288,9 +288,14 @@ export function RulesPage() {
           ))}
         </div>
 
-        <Link to="/queue" className="btn">
-          Try a case with this appetite →
-        </Link>
+        <div className="row">
+          <Link to="/queue" className="btn">
+            Try a case with this appetite →
+          </Link>
+          <Link to="/docs/rules-engine" className="btn btn-ghost">
+            Read rules engine design
+          </Link>
+        </div>
       </div>
     </div>
   );
