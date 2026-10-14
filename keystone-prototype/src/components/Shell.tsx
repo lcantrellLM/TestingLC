@@ -16,7 +16,7 @@ export function Shell() {
           <div className="brand-mark">Keystone</div>
           <div className="brand-sub">Property risk · UK mortgages</div>
         </div>
-        <nav className="nav-links">
+        <nav className="nav-links" aria-label="Primary">
           {links.map((l) => (
             <NavLink
               key={l.to}
@@ -34,9 +34,28 @@ export function Shell() {
           Prototype only · VRM-inspired rules · HCR-first routing
         </div>
       </aside>
-      <main className="main">
-        <Outlet />
-      </main>
+      <div className="main-column">
+        <header className="top-nav" aria-label="Top">
+          <div className="top-nav-brand">Keystone</div>
+          <nav className="top-nav-links">
+            {links.map((l) => (
+              <NavLink
+                key={l.to}
+                to={l.to}
+                end={l.end}
+                className={({ isActive }) =>
+                  `top-nav-link${isActive ? " active" : ""}`
+                }
+              >
+                {l.label}
+              </NavLink>
+            ))}
+          </nav>
+        </header>
+        <main className="main">
+          <Outlet />
+        </main>
+      </div>
     </div>
   );
 }
