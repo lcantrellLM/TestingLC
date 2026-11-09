@@ -24,8 +24,8 @@ export default function App() {
             <Route path="/login" element={<Login />} />
             <Route element={<Shell />}>
               <Route index element={<Dashboard />} />
-              <Route path="explore" element={<Home />} />
               <Route path="queue" element={<Queue />} />
+              <Route path="explore" element={<Home />} />
               <Route path="rules" element={<RulesPage />} />
               <Route path="mi" element={<MiPage />} />
               <Route path="docs" element={<DocsIndex />} />

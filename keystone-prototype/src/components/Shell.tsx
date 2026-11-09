@@ -1,18 +1,16 @@
 import { Navigate, NavLink, Outlet, useNavigate } from "react-router-dom";
+import { BRANCHES, deskLabel } from "../data";
 import { useSession } from "../session";
-import { OrgSwitcher } from "./OrgSwitcher";
 
 const links = [
-  { to: "/", label: "Dashboard", end: true },
-  { to: "/queue", label: "Queue", end: false },
-  { to: "/rules", label: "Rules", end: false },
-  { to: "/mi", label: "MI", end: false },
-  { to: "/docs", label: "Docs", end: false },
-  { to: "/explore", label: "Explore", end: false },
+  { to: "/", label: "Cases", end: true },
+  { to: "/queue", label: "Tasks", end: false },
+  { to: "/docs", label: "Help", end: false },
 ];
 
 export function Shell() {
-  const { authenticated, user, logout } = useSession();
+  const { authenticated, user, company, branch, setBranch, logout } =
+    useSession();
   const navigate = useNavigate();
 
   if (!authenticated) {
@@ -23,8 +21,11 @@ export function Shell() {
     <div className="app-shell">
       <aside className="nav">
         <div className="brand">
-          <div className="brand-mark">Keystone</div>
-          <div className="brand-sub">Property risk · UK mortgages</div>
+          <div className="brand-row">
+            <span className="brand-mark">Vantage</span>
+            <span className="brand-dot" aria-hidden />
+            <span className="brand-product">CaseManager</span>
+          </div>
         </div>
         <nav className="nav-links" aria-label="Primary">
           {links.map((l) => (
@@ -36,42 +37,29 @@ export function Shell() {
                 `nav-link${isActive ? " active" : ""}`
               }
             >
+              <span className="nav-ico" aria-hidden>
+                {l.label === "Cases" ? "📁" : l.label === "Tasks" ? "☑" : "?"}
+              </span>
               {l.label}
             </NavLink>
           ))}
         </nav>
-        <div className="nav-footer">
-          Signed in as {user.name}
-          <br />
-          Clickable prototype · switch desks, open cases
-        </div>
+        <div className="nav-footer">Clickable prototype · sample data</div>
       </aside>
+
       <div className="main-column">
         <header className="top-nav" aria-label="Top">
-          <div className="top-nav-brand">Keystone</div>
-          <nav className="top-nav-links">
-            {links.map((l) => (
-              <NavLink
-                key={l.to}
-                to={l.to}
-                end={l.end}
-                className={({ isActive }) =>
-                  `top-nav-link${isActive ? " active" : ""}`
-                }
-              >
-                {l.label}
-              </NavLink>
-            ))}
-          </nav>
+          <div className="top-nav-spacer" />
           <div className="top-nav-actions">
-            <OrgSwitcher />
-            <div className="top-nav-user">
-              <div className="top-nav-user-name">{user.name}</div>
-              <div className="tiny muted">{user.role}</div>
+            <button type="button" className="icon-btn" aria-label="Search">
+              ⌕
+            </button>
+            <div className="avatar" title={user.name}>
+              {user.initials}
             </div>
             <button
               type="button"
-              className="btn btn-sm btn-ghost"
+              className="btn btn-sm"
               onClick={() => {
                 logout();
                 navigate("/login", { replace: true });
@@ -81,6 +69,27 @@ export function Shell() {
             </button>
           </div>
         </header>
+
+        <div className="view-as-bar" aria-label="Company and branch switcher">
+          <span className="view-as-label">View as</span>
+          <div className="view-as-pills">
+            {BRANCHES.map((b) => (
+              <button
+                key={b.id}
+                type="button"
+                className={`view-as-pill${b.id === branch.id ? " active" : ""}`}
+                aria-pressed={b.id === branch.id}
+                onClick={() => setBranch(b.id)}
+              >
+                {deskLabel(b)}
+              </button>
+            ))}
+          </div>
+          <span className="view-as-hint">
+            Branch-filtered case list · {company.shortName}
+          </span>
+        </div>
+
         <main className="main">
           <Outlet />
         </main>

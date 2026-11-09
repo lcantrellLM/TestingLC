@@ -1,50 +1,38 @@
 import { Link } from "react-router-dom";
-import { casesForBranch, statusTone } from "../data";
+import { casesForBranch, deskLabel, slaTone } from "../data";
 import { useSession } from "../session";
 
 export function Queue() {
-  const { company, branch } = useSession();
-  const cases = casesForBranch(branch.id);
+  const { branch } = useSession();
+  const cases = casesForBranch(branch.id).filter(
+    (c) => c.sla !== "Within SLA" || c.status !== "Ready",
+  );
 
   return (
     <div key={branch.id}>
       <header className="page-head">
         <div>
-          <h1 className="page-title">Underwriter queue</h1>
+          <h1 className="page-title">Tasks</h1>
           <p className="page-lede">
-            {branch.name} · {company.shortName}. Click a case to open the route
-            decision.
+            Attention items for {deskLabel(branch)}.
           </p>
         </div>
       </header>
 
       <div className="stack">
-        {cases.map((c) => (
-          <Link
-            key={c.id}
-            to={`/case/${c.id}`}
-            className="panel panel-pad case-card"
-          >
-            <div className="row between">
-              <div className="stack" style={{ gap: 6, minWidth: 0, flex: 1 }}>
-                <div className="row">
-                  <strong>{c.id}</strong>
-                  <span className={`pill ${statusTone(c.status)}`}>
-                    {c.status}
-                  </span>
-                  <span className="pill accent">{c.route}</span>
-                </div>
+        {cases.length === 0 ? (
+          <div className="detail-card">No open tasks for this desk.</div>
+        ) : (
+          cases.map((c) => (
+            <Link key={c.id} to={`/case/${c.id}`} className="task-row">
+              <div>
+                <strong>{c.id}</strong>
                 <div className="small muted">{c.address}</div>
-                <div className="tiny muted mono">
-                  {c.product} · LTV {c.ltv} · Risk {c.risk} · Conf {c.conf}
-                </div>
               </div>
-              <span className="small" style={{ color: "var(--accent)" }}>
-                Open →
-              </span>
-            </div>
-          </Link>
-        ))}
+              <span className={`status-badge ${slaTone(c.sla)}`}>{c.sla}</span>
+            </Link>
+          ))
+        )}
       </div>
     </div>
   );
