@@ -19,12 +19,12 @@ export function Login() {
           <span className="brand-product">CaseManager</span>
         </div>
         <p className="login-lede">
-          Clickable prototype. Enter as an underwriter, switch company or branch
-          with View as, then open cases for that desk.
+          Clickable prototype. Enter as an underwriter, switch company then
+          branch, and open cases for that desk.
         </p>
         <ol className="proto-steps">
           <li>Enter the workspace</li>
-          <li>Click another company / branch in View as</li>
+          <li>Switch company, then branch</li>
           <li>Open a case from the table</li>
         </ol>
         <button

@@ -1,6 +1,6 @@
 import { Navigate, NavLink, Outlet, useNavigate } from "react-router-dom";
-import { BRANCHES, deskLabel } from "../data";
 import { useSession } from "../session";
+import { OrgSwitcher } from "./OrgSwitcher";
 
 const links = [
   { to: "/", label: "Cases", end: true },
@@ -9,8 +9,17 @@ const links = [
 ];
 
 export function Shell() {
-  const { authenticated, user, company, branch, setBranch, logout } =
-    useSession();
+  const {
+    authenticated,
+    user,
+    company,
+    branch,
+    companies,
+    branches,
+    setCompany,
+    setBranch,
+    logout,
+  } = useSession();
   const navigate = useNavigate();
 
   if (!authenticated) {
@@ -49,6 +58,7 @@ export function Shell() {
 
       <div className="main-column">
         <header className="top-nav" aria-label="Top">
+          <OrgSwitcher />
           <div className="top-nav-spacer" />
           <div className="top-nav-actions">
             <button type="button" className="icon-btn" aria-label="Search">
@@ -70,24 +80,45 @@ export function Shell() {
           </div>
         </header>
 
-        <div className="view-as-bar" aria-label="Company and branch switcher">
-          <span className="view-as-label">View as</span>
-          <div className="view-as-pills">
-            {BRANCHES.map((b) => (
-              <button
-                key={b.id}
-                type="button"
-                className={`view-as-pill${b.id === branch.id ? " active" : ""}`}
-                aria-pressed={b.id === branch.id}
-                onClick={() => setBranch(b.id)}
-              >
-                {deskLabel(b)}
-              </button>
-            ))}
+        <div className="org-bar" aria-label="Company and branch switch">
+          <div className="org-bar-row">
+            <span className="view-as-label">Company</span>
+            <div className="view-as-pills" role="listbox" aria-label="Company">
+              {companies.map((c) => (
+                <button
+                  key={c.id}
+                  type="button"
+                  role="option"
+                  aria-selected={c.id === company.id}
+                  className={`view-as-pill${c.id === company.id ? " active" : ""}`}
+                  onClick={() => setCompany(c.id)}
+                >
+                  {c.name}
+                </button>
+              ))}
+            </div>
           </div>
-          <span className="view-as-hint">
-            Branch-filtered case list · {company.shortName}
-          </span>
+          <div className="org-bar-row">
+            <span className="view-as-label">Branch</span>
+            <div className="view-as-pills" role="listbox" aria-label="Branch">
+              {branches.map((b) => (
+                <button
+                  key={b.id}
+                  type="button"
+                  role="option"
+                  aria-selected={b.id === branch.id}
+                  className={`view-as-pill${b.id === branch.id ? " active" : ""}`}
+                  onClick={() => setBranch(b.id)}
+                >
+                  {b.name}
+                  <span className="pill-meta">{b.region}</span>
+                </button>
+              ))}
+            </div>
+            <span className="view-as-hint">
+              Cases filtered to {company.shortName} · {branch.name}
+            </span>
+          </div>
         </div>
 
         <main className="main">

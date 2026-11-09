@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import {
   casesForBranch,
-  deskLabel,
   getCompany,
   slaTone,
   workflowTone,
@@ -18,7 +17,7 @@ export function Dashboard() {
         <div>
           <h1 className="page-title">Cases</h1>
           <p className="page-lede">
-            Showing cases visible to {deskLabel(branch)}.
+            Showing cases for {company.name} · {branch.name}.
           </p>
         </div>
         <button type="button" className="btn btn-primary">

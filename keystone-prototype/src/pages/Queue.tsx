@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
-import { casesForBranch, deskLabel, slaTone } from "../data";
+import { casesForBranch, slaTone } from "../data";
 import { useSession } from "../session";
 
 export function Queue() {
-  const { branch } = useSession();
+  const { company, branch } = useSession();
   const cases = casesForBranch(branch.id).filter(
     (c) => c.sla !== "Within SLA" || c.status !== "Ready",
   );
@@ -14,7 +14,7 @@ export function Queue() {
         <div>
           <h1 className="page-title">Tasks</h1>
           <p className="page-lede">
-            Attention items for {deskLabel(branch)}.
+            Attention items for {company.shortName} · {branch.name}.
           </p>
         </div>
       </header>
