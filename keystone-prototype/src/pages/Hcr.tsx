@@ -1,12 +1,12 @@
 import { useMemo, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { CASES } from "../data";
+import { findCase } from "../data";
 
 type Tab = "summary" | "defects" | "photos" | "notes";
 
 export function HcrPage() {
   const { caseId = "KS-10428" } = useParams();
-  const c = CASES.find((x) => x.id === caseId) ?? CASES[0];
+  const c = findCase(caseId);
   const [tab, setTab] = useState<Tab>("summary");
 
   const defects = useMemo(() => {

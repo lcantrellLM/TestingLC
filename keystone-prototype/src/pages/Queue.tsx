@@ -1,20 +1,25 @@
 import { Link } from "react-router-dom";
-import { CASES, statusTone } from "../data";
+import { casesForBranch, statusTone } from "../data";
+import { useSession } from "../session";
 
 export function Queue() {
+  const { company, branch } = useSession();
+  const cases = casesForBranch(branch.id);
+
   return (
-    <div>
+    <div key={branch.id}>
       <header className="page-head">
         <div>
           <h1 className="page-title">Underwriter queue</h1>
           <p className="page-lede">
-            Click a case to open the route decision.
+            {branch.name} · {company.shortName}. Click a case to open the route
+            decision.
           </p>
         </div>
       </header>
 
       <div className="stack">
-        {CASES.map((c) => (
+        {cases.map((c) => (
           <Link
             key={c.id}
             to={`/case/${c.id}`}

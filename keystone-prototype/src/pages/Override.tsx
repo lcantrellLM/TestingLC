@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { CASES, type Route } from "../data";
+import { findCase, type Route } from "../data";
 import { useCaseState } from "../state";
 
 const ROUTES: Route[] = [
@@ -20,7 +20,7 @@ const REASONS = [
 
 export function OverridePage() {
   const { caseId = "KS-10428" } = useParams();
-  const c = CASES.find((x) => x.id === caseId) ?? CASES[0];
+  const c = findCase(caseId);
   const { setOverride } = useCaseState();
   const navigate = useNavigate();
   const [picked, setPicked] = useState<Route>(c.route);

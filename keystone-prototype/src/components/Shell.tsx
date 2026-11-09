@@ -1,14 +1,24 @@
-import { NavLink, Outlet } from "react-router-dom";
+import { Navigate, NavLink, Outlet, useNavigate } from "react-router-dom";
+import { useSession } from "../session";
+import { OrgSwitcher } from "./OrgSwitcher";
 
 const links = [
-  { to: "/", label: "Home", end: true },
-  { to: "/queue", label: "Queue" },
-  { to: "/rules", label: "Rules" },
-  { to: "/mi", label: "MI" },
-  { to: "/docs", label: "Docs" },
+  { to: "/", label: "Dashboard", end: true },
+  { to: "/queue", label: "Queue", end: false },
+  { to: "/rules", label: "Rules", end: false },
+  { to: "/mi", label: "MI", end: false },
+  { to: "/docs", label: "Docs", end: false },
+  { to: "/explore", label: "Explore", end: false },
 ];
 
 export function Shell() {
+  const { authenticated, user, logout } = useSession();
+  const navigate = useNavigate();
+
+  if (!authenticated) {
+    return <Navigate to="/login" replace />;
+  }
+
   return (
     <div className="app-shell">
       <aside className="nav">
@@ -31,7 +41,9 @@ export function Shell() {
           ))}
         </nav>
         <div className="nav-footer">
-          Prototype only · VRM-inspired rules · HCR-first routing
+          Signed in as {user.name}
+          <br />
+          Prototype only · company &amp; branch switcher
         </div>
       </aside>
       <div className="main-column">
@@ -51,6 +63,23 @@ export function Shell() {
               </NavLink>
             ))}
           </nav>
+          <div className="top-nav-actions">
+            <OrgSwitcher />
+            <div className="top-nav-user">
+              <div className="top-nav-user-name">{user.name}</div>
+              <div className="tiny muted">{user.role}</div>
+            </div>
+            <button
+              type="button"
+              className="btn btn-sm btn-ghost"
+              onClick={() => {
+                logout();
+                navigate("/login", { replace: true });
+              }}
+            >
+              Sign out
+            </button>
+          </div>
         </header>
         <main className="main">
           <Outlet />

@@ -39,8 +39,10 @@ export function Home() {
         <div>
           <h1 className="page-title">What do you want to explore?</h1>
           <p className="page-lede">
-            A clickable mid-fi prototype of HCR-first valuation routing. Nothing
-            here is wired to live lending systems — it is for shaping the idea.
+            A clickable mid-fi prototype of HCR-first valuation routing. Use the
+            header switcher to change company or branch, then open the dashboard
+            for that desk&apos;s cases. Nothing here is wired to live lending
+            systems.
           </p>
         </div>
       </header>
