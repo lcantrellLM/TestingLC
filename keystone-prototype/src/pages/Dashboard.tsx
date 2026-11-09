@@ -1,9 +1,14 @@
 import { Link } from "react-router-dom";
-import { casesForBranch, statusTone } from "../data";
+import {
+  BRANCHES,
+  casesForBranch,
+  getCompany,
+  statusTone,
+} from "../data";
 import { useSession } from "../session";
 
 export function Dashboard() {
-  const { company, branch } = useSession();
+  const { company, branch, companies, setBranch } = useSession();
   const cases = casesForBranch(branch.id);
   const ready = cases.filter((c) => c.status === "Ready").length;
   const review = cases.filter((c) => c.status === "Needs review").length;
@@ -15,8 +20,8 @@ export function Dashboard() {
         <div>
           <h1 className="page-title">Branch dashboard</h1>
           <p className="page-lede">
-            Cases for <strong>{branch.name}</strong> at {company.name}. Use the
-            switcher in the header to move between companies and branches.
+            Click a desk below (or the header switcher) to change company /
+            branch. The case list updates for that desk.
           </p>
         </div>
         <div className="dashboard-context panel panel-pad">
@@ -27,6 +32,37 @@ export function Dashboard() {
           </div>
         </div>
       </header>
+
+      <section className="desk-picker" aria-label="Switch desk">
+        {companies.map((c) => {
+          const desks = BRANCHES.filter((b) => b.companyId === c.id);
+          return (
+            <div key={c.id} className="desk-picker-group">
+              <div className="desk-picker-company">{c.name}</div>
+              <div className="desk-picker-row">
+                {desks.map((b) => {
+                  const count = casesForBranch(b.id).length;
+                  const active = b.id === branch.id;
+                  return (
+                    <button
+                      key={b.id}
+                      type="button"
+                      className={`desk-chip${active ? " active" : ""}`}
+                      aria-pressed={active}
+                      onClick={() => setBranch(b.id)}
+                    >
+                      <span className="desk-chip-name">{b.name}</span>
+                      <span className="desk-chip-meta">
+                        {b.region} · {count} cases
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          );
+        })}
+      </section>
 
       <div className="grid-3" style={{ marginBottom: 16 }}>
         <div className="panel stat">
@@ -51,9 +87,11 @@ export function Dashboard() {
       </div>
 
       <div className="row between" style={{ marginBottom: 10 }}>
-        <h2 className="doc-h2">Case list</h2>
+        <h2 className="doc-h2">
+          Case list · {getCompany(branch.companyId)?.shortName} / {branch.name}
+        </h2>
         <span className="tiny muted">
-          {cases.length} case{cases.length === 1 ? "" : "s"} in this branch
+          {cases.length} case{cases.length === 1 ? "" : "s"} · click to open
         </span>
       </div>
 

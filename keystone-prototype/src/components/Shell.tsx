@@ -43,7 +43,7 @@ export function Shell() {
         <div className="nav-footer">
           Signed in as {user.name}
           <br />
-          Prototype only · company &amp; branch switcher
+          Clickable prototype · switch desks, open cases
         </div>
       </aside>
       <div className="main-column">

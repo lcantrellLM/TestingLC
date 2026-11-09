@@ -757,6 +757,19 @@ a {
   margin-top: 4px;
 }
 
+.login-secondary {
+  width: 100%;
+  justify-content: center;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding-top: 4px;
+  border-top: 1px solid var(--line);
+}
+
 .login-error {
   margin: 0;
   color: var(--danger);
@@ -767,6 +780,92 @@ a {
 .login-hint {
   margin: 0;
   text-align: center;
+}
+
+.proto-steps {
+  margin: 0;
+  padding: 12px 12px 12px 30px;
+  border-radius: var(--radius-sm);
+  background: var(--paper);
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+}
+
+.proto-steps li + li {
+  margin-top: 6px;
+}
+
+.desk-picker {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 18px;
+  padding: 14px;
+  border: 1px dashed color-mix(in srgb, var(--accent) 35%, var(--line));
+  border-radius: var(--radius);
+  background: color-mix(in srgb, var(--accent-soft) 35%, var(--surface-raised));
+}
+
+.desk-picker-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.desk-picker-company {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.desk-picker-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.desk-chip {
+  appearance: none;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  min-width: 150px;
+  padding: 10px 12px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-sm);
+  background: var(--surface-raised);
+  color: var(--ink);
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 140ms ease, background 140ms ease, transform 120ms ease;
+}
+
+.desk-chip:hover {
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--line-strong));
+  transform: translateY(-1px);
+}
+
+.desk-chip.active {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.desk-chip-name {
+  font-size: 0.92rem;
+  font-weight: 700;
+}
+
+.desk-chip-meta {
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+.desk-chip.active .desk-chip-meta {
+  color: color-mix(in srgb, var(--accent) 70%, var(--muted));
 }
 
 @media (max-width: 960px) {

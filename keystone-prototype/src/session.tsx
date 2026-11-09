@@ -32,6 +32,7 @@ type SessionCtx = {
   companies: Company[];
   branches: Branch[];
   login: (email: string, password: string) => { ok: true } | { ok: false; error: string };
+  enterDemo: () => void;
   logout: () => void;
   setCompany: (companyId: string) => void;
   setBranch: (branchId: string) => void;
@@ -120,6 +121,17 @@ export function SessionProvider({ children }: { children: ReactNode }) {
         });
         return { ok: true };
       },
+      enterDemo: () => {
+        const nextBranch = defaultBranchForCompany(COMPANIES[0].id);
+        setAuthenticated(true);
+        setCompanyId(COMPANIES[0].id);
+        setBranchId(nextBranch);
+        persist({
+          authenticated: true,
+          companyId: COMPANIES[0].id,
+          branchId: nextBranch,
+        });
+      },
       logout: () => {
         setAuthenticated(false);
         writeStored(null);
@@ -136,11 +148,12 @@ export function SessionProvider({ children }: { children: ReactNode }) {
       },
       setBranch: (nextBranchId) => {
         const target = getBranch(nextBranchId);
-        if (!target || target.companyId !== companyId) return;
+        if (!target) return;
+        setCompanyId(target.companyId);
         setBranchId(nextBranchId);
         persist({
           authenticated: true,
-          companyId,
+          companyId: target.companyId,
           branchId: nextBranchId,
         });
       },
