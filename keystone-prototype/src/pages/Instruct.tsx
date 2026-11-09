@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { CASES } from "../data";
+import { findCase } from "../data";
 import { useCaseState } from "../state";
 
 export function InstructPage() {
   const { caseId = "KS-10428" } = useParams();
-  const c = CASES.find((x) => x.id === caseId) ?? CASES[0];
+  const c = findCase(caseId);
   const { overrides } = useCaseState();
   const route = overrides[c.id] ?? c.route;
   const [done, setDone] = useState(false);

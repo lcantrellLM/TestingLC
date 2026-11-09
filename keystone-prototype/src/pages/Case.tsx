@@ -1,10 +1,10 @@
 import { Link, useParams } from "react-router-dom";
-import { CASES, riskTone } from "../data";
+import { findCase, riskTone } from "../data";
 import { useCaseState } from "../state";
 
 export function CasePage() {
   const { caseId = "KS-10428" } = useParams();
-  const c = CASES.find((x) => x.id === caseId) ?? CASES[0];
+  const c = findCase(caseId);
   const { overrides } = useCaseState();
   const shownRoute = overrides[c.id] ?? c.route;
 
