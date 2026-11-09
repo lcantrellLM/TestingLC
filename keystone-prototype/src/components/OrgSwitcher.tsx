@@ -1,9 +1,16 @@
 import { useEffect, useId, useRef, useState } from "react";
-import { BRANCHES, casesForBranch, getCompany } from "../data";
+import { casesForBranch } from "../data";
 import { useSession } from "../session";
 
 export function OrgSwitcher() {
-  const { company, branch, companies, setBranch } = useSession();
+  const {
+    company,
+    branch,
+    companies,
+    branches,
+    setCompany,
+    setBranch,
+  } = useSession();
   const [open, setOpen] = useState(false);
   const rootRef = useRef<HTMLDivElement>(null);
   const labelId = useId();
@@ -39,8 +46,10 @@ export function OrgSwitcher() {
         onClick={() => setOpen((v) => !v)}
       >
         <span className="org-switcher-copy">
-          <span className="org-switcher-company">{company.shortName}</span>
-          <span className="org-switcher-branch">{branch.name}</span>
+          <span className="org-switcher-kicker">Company / branch</span>
+          <span className="org-switcher-value">
+            {company.shortName} · {branch.name}
+          </span>
         </span>
         <span className="org-switcher-chevron" aria-hidden>
           ▾
@@ -54,42 +63,52 @@ export function OrgSwitcher() {
           role="dialog"
           aria-label="Switch company or branch"
         >
-          {companies.map((c) => {
-            const desks = BRANCHES.filter((b) => b.companyId === c.id);
-            return (
-              <div key={c.id} className="org-switcher-section">
-                <div className="org-switcher-label">{c.name}</div>
-                <div
-                  className="org-switcher-options"
-                  role="listbox"
-                  aria-label={`${c.shortName} branches`}
+          <div className="org-switcher-section">
+            <div className="org-switcher-label">Company</div>
+            <div className="org-switcher-options" role="listbox" aria-label="Company">
+              {companies.map((c) => (
+                <button
+                  key={c.id}
+                  type="button"
+                  role="option"
+                  aria-selected={c.id === company.id}
+                  className={`org-switcher-option${c.id === company.id ? " active" : ""}`}
+                  onClick={() => setCompany(c.id)}
                 >
-                  {desks.map((b) => {
-                    const count = casesForBranch(b.id).length;
-                    const active = b.id === branch.id;
-                    return (
-                      <button
-                        key={b.id}
-                        type="button"
-                        role="option"
-                        aria-selected={active}
-                        className={`org-switcher-option${active ? " active" : ""}`}
-                        onClick={() => {
-                          setBranch(b.id);
-                          setOpen(false);
-                        }}
-                      >
-                        <span>{b.name}</span>
-                        <span className="tiny muted">
-                          {getCompany(b.companyId)?.shortName} · {count}
-                        </span>
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-            );
-          })}
+                  <span>{c.name}</span>
+                  <span className="tiny muted">{c.shortName}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div className="org-switcher-section">
+            <div className="org-switcher-label">Branch</div>
+            <div className="org-switcher-options" role="listbox" aria-label="Branch">
+              {branches.map((b) => {
+                const count = casesForBranch(b.id).length;
+                const active = b.id === branch.id;
+                return (
+                  <button
+                    key={b.id}
+                    type="button"
+                    role="option"
+                    aria-selected={active}
+                    className={`org-switcher-option${active ? " active" : ""}`}
+                    onClick={() => {
+                      setBranch(b.id);
+                      setOpen(false);
+                    }}
+                  >
+                    <span>{b.name}</span>
+                    <span className="tiny muted">
+                      {b.region} · {count} cases
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
         </div>
       ) : null}
     </div>

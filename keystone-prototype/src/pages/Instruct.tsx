@@ -35,8 +35,8 @@ export function InstructPage() {
             HCR pack attached · panel/AVM notified · audit logged
           </span>
           <div className="row">
-            <Link to="/queue" className="btn btn-primary">
-              Back to queue
+            <Link to="/" className="btn btn-primary">
+              Back to cases
             </Link>
             <Link to="/mi" className="btn">
               View MI

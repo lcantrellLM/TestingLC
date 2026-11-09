@@ -1,6 +1,6 @@
-# Keystone — property risk prototype
+# Vantage CaseManager — clickable prototype
 
-Clickable mid-fi web prototype for an HCR-first UK mortgage valuation risk platform.
+Clickable mid-fi web prototype styled like Vantage LPM CaseManager, with company/branch switching and per-desk case lists.
 
 ## Run locally
 
@@ -10,17 +10,14 @@ npm install
 npm run dev
 ```
 
-Open the URL Vite prints (usually `http://localhost:5173`).
+Open the URL Vite prints (usually `http://127.0.0.1:5173`).
 
 ## What’s inside
 
-- **Login** — one-click enter into the clickable prototype (optional sign-in form)
-- **Company / branch switcher** — click desk chips on the dashboard or use the header switcher
-- **Dashboard** — case list and counts for the active branch; click a case to open it
-- **Queue / Case** — valuation route recommendation, override, instruct (scoped to the active branch)
-- **HCR** — condition summary, defects, photos, surveyor notes
-- **Rules workbench** — sample rules shaped like a VRM Phase 8 draft (A→B→C→D)
-- **MI** — illustrative route-mix dashboard
-- **Docs / Explore** — design pack and prototype tour
+- **One-click entry** — enter as Lee-Ann
+- **View as** — switch Meridian Bristol/Manchester or Harbor Cardiff/London
+- **Cases table** — Vantage-style case list for the active desk
+- **Case detail** — card layout with route actions / HCR / override
+- **Tasks** — attention items for the active desk
 
 Prototype data only — not connected to live lending systems.
